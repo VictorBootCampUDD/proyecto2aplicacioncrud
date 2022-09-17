@@ -20,9 +20,15 @@ btnAdd.addEventListener("click", (e) => {
 let limpiar = document.getElementById('limpiar');
     limpiar.addEventListener('click', _ => {
         clearForm();
-})
+ })
+
+// let limpiar = document.getElementById('limpiar');
+//     limpiar.addEventListener('click', (a) => {
+//         clearForm();
+// })
 
 let refresh = document.getElementById('refresh');
+refresh.addEventListener
     refresh.addEventListener('click', _ => {
         //alert("refresh");
         clearForm();
@@ -37,6 +43,21 @@ editaList.forEach(element => {
         readOne(element.id.match(/(\d+)/)[0]);
     })
 });
+//===> Lee y presenta el registro seleccionado <===
+function readOne(id){
+    // alert("Lee 1 registro");
+    //Swal.fire('Se editará el registro No.: '+id,'','success')
+    let notitas = read("notitas");
+    let notitaOne = notitas[id - 1];
+    
+    console.log(notitaOne.id);
+
+    idnotita.value = notitaOne.id;
+    //id.value = notita.id;
+    titulo.value = notitaOne.titu;
+    responsable.value = notitaOne.resp;
+    notita.value = notitaOne.noti;
+}
 
 let BorraList = document.querySelectorAll(".btn-outline-danger");
 BorraList.forEach(element => {
@@ -77,16 +98,18 @@ let notita = document.querySelector("#notita");
 //===> CREA Y ACTUALIZA UN REGISTRO (CREATE y el UPDATE)<===
 function createNotita(e){
 
-    // e.preventDefault();
+    e.preventDefault();
 
     //===> Leo el Objeto notitas <===
     let notitas = read("notitas");
-    // alert(notitas);
-if(notitas.titulo != null){
+    alert(titulo.value);
+
+if(titulo.value != null && titulo.value != ""){
 
     //===> Realiza el CREATE si el id es cero o no existe <===
     if (idnotita.value == 0 || idnotita.value == null ){
         alert(idnotita.value);
+        alert(titulo.value);
         const nota = {
             id: (notitas.length + 1), //Considera la longitud del objeto
             titu : titulo.value,
@@ -111,11 +134,13 @@ if(notitas.titulo != null){
     clearForm();
     readAll();
 
-}else{
-    alert("Debe ingresar datos, antes de guardar..!!");
-    Swal.fire('Debe ingresar datos, antes de guardar..!!','Nota','success');
-    // Swal.fire('Any fool can use a computer');
-}
+ }else{
+     //alert("Debe ingresar datos, antes de guardar..!!");
+     //Swal.fire('El registro está vacio, no se guardará..!!','','success');
+     Swal.fire({icon: 'error',title: 'El registro está vacío...!!',text: 'Ingrese datos e intente nuevamente..!!',footer: '<a href="">Consulte a soporte...?</a>'
+      })
+     // Swal.fire('Any fool can use a computer');
+ }
 
     // location.reload();  //Esto lo hago ya que no se actualiza el readAll()
 
@@ -125,7 +150,6 @@ if(notitas.titulo != null){
 
 //===> Limpia Campos de Formulario <===
 function clearForm(){
-    //idnotita.value = 0;   
     id.value = 0;
     titulo.value = '';
     responsable.value = '';
@@ -141,7 +165,7 @@ function readAll(){
     tbody.innerHTML = "";
 
     let notitas = read("notitas");
-    
+
     notitas.forEach(element => {
         tbody.innerHTML += `<tr>
             <td>${element.id}</td>
@@ -158,19 +182,7 @@ function readAll(){
 
 }
 
-//===> Lee y presenta el registro seleccionado <===
-function readOne(id){
-    // alert("readOne");
-    //Swal.fire('Se editará el registro No.: '+id,'','success')
-    let notitas = read("notitas");
-    let notitaOne = notitas[id - 1];
-    
-    idnotita.value = notitaOne.id;
-    //id.value = notita.id;
-    titulo.value = notitaOne.titu;
-    responsable.value = notitaOne.resp;
-    notita.value = notitaOne.noti;
-}
+
 
 function delNotita(id){
     let notitas = read("notitas");
