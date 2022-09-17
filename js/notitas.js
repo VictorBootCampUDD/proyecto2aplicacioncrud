@@ -11,21 +11,18 @@ readAll();
 
 //===> BOTONES DEL SISTEMA <===
 
-let btnAdd = document.querySelector("#btnActualizar");
-btnAdd.addEventListener("click", (e) => {
-    //Swal.fire('Excelente, registro ingresado/Actualizado..!!','','success')
-    createNotita(e);
-});
+// let botonAgregar = document.querySelector("#btnActualizar");
+// botonAgregar.addEventListener("click", (e) => {
+//     //Swal.fire('Excelente, registro ingresado/Actualizado..!!','','success')
+//     createNotita(e);
+// });
+
+let botonAgregar = document.querySelector("#btnActualizar");
+botonAgregar.addEventListener("click", (e) => {createNotita(e)});
+
 
 let limpiar = document.getElementById('limpiar');
-    limpiar.addEventListener('click', _ => {
-        clearForm();
- })
-
-// let limpiar = document.getElementById('limpiar');
-//     limpiar.addEventListener('click', (a) => {
-//         clearForm();
-// })
+limpiar.addEventListener('click', (e) => {clearForm()})
 
 let refresh = document.getElementById('refresh');
 refresh.addEventListener
@@ -40,17 +37,18 @@ refresh.addEventListener
 let editaList = document.querySelectorAll(".btn-outline-primary");
 editaList.forEach(element => {
     element.addEventListener('click', (e) => {
-        readOne(element.id.match(/(\d+)/)[0]);
+        // console.log(element.id.match(/(\d+)/)[0]);
+        leeUno(element.id.match(/(\d+)/)[0]);
     })
 });
 //===> Lee y presenta el registro seleccionado <===
-function readOne(id){
+function leeUno(id){
     // alert("Lee 1 registro");
     //Swal.fire('Se editará el registro No.: '+id,'','success')
     let notitas = read("notitas");
     let notitaOne = notitas[id - 1];
     
-    console.log(notitaOne.id);
+    // console.log(notitaOne.id);
 
     idnotita.value = notitaOne.id;
     //id.value = notita.id;
@@ -67,13 +65,18 @@ BorraList.forEach(element => {
         readAll();
     })
 });
+function delNotita(id){
 
-// let refresh = document.getElementById('refresh');
-//     refresh.addEventListener('click', _ => {
-//             location.reload();
-// })
+    // console.log(id);
 
-//==================FIN BOTONES===========================
+    let notitas = read("notitas");
+    // alert(id);
+    let filtrado = notitas.filter(notitaP => notitaP.id != id);
+    save("notitas", filtrado);
+    //readAll();
+}
+
+
 
 
 //===> FUNCIONES PARA TRABAJAR CON EL LOCAL STORAGE <==========
@@ -99,17 +102,18 @@ let notita = document.querySelector("#notita");
 function createNotita(e){
 
     e.preventDefault();
+    // console.log(e);
 
     //===> Leo el Objeto notitas <===
     let notitas = read("notitas");
-    alert(titulo.value);
+    // alert(titulo.value);
 
 if(titulo.value != null && titulo.value != ""){
 
     //===> Realiza el CREATE si el id es cero o no existe <===
     if (idnotita.value == 0 || idnotita.value == null ){
-        alert(idnotita.value);
-        alert(titulo.value);
+        // alert(idnotita.value);
+        // alert(titulo.value);
         const nota = {
             id: (notitas.length + 1), //Considera la longitud del objeto
             titu : titulo.value,
@@ -129,7 +133,7 @@ if(titulo.value != null && titulo.value != ""){
         
     }
 
-    // Swal.fire('Excelente, registro Ingresado/modificado..!!','','success')
+    Swal.fire('Excelente, registro Ingresado o modificado correctamente..!!','','success')
     save("notitas", notitas); //Graba en local storage
     clearForm();
     readAll();
@@ -184,13 +188,7 @@ function readAll(){
 
 
 
-function delNotita(id){
-    let notitas = read("notitas");
-    // alert(id);
-    let filtrado = notitas.filter(notitaP => notitaP.id != id);
-    save("notitas", filtrado);
-    readAll();
-}
+
 
 
 
