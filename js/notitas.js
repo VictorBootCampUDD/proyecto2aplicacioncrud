@@ -9,18 +9,20 @@
 //**                                     **  
 //*****************************************
 
-//===> ACTUALIZA LOS DATOS DESDE EL L.S. <===
+//===> ACTUALIZA LOS DATOS EN PANTALLA DESDE EL L.S. <===
 readAll();
 
 //===> BOTONES DEL SISTEMA <===
 
+//==> Crea una nueva Notita <===
 let botonAgregar = document.querySelector("#btnActualizar");
 botonAgregar.addEventListener("click", (e) => {createNotita(e)});
 
-
+//===> Limpia los campos de ingreso de datos <===
 let limpiar = document.getElementById('limpiar');
 limpiar.addEventListener('click', (e) => {clearForm()})
 
+//===> Si llega a ser necesario refresca todo, hasta el formulario <===
 let refresh = document.getElementById('refresh');
 refresh.addEventListener
     refresh.addEventListener('click', _ => {
@@ -30,46 +32,8 @@ refresh.addEventListener
         location.reload();  //Esto lo hago cuandoe no se actualiza el readAll()
 })
 
-// let editList = document.querySelectorAll(".btn-outline-warning");
-// let editaList = document.querySelectorAll(".btn-outline-primary");
-// editaList.forEach(element => {
-//     element.addEventListener('click', (e) => {
-//         // console.log(element.id.match(/(\d+)/)[0]);
-//         leeUno(element.id.match(/(\d+)/)[0]);
-//     })
-// });
-
-//===> Lee y presenta el registro seleccionado <===
-function leeUno(id){
-    // alert("Lee 1 registro");
-    //Swal.fire('Se editará el registro No.: '+id,'','success')
-    let notitas = read("notitas");
-    let notitaOne = notitas[id - 1];
-    
-    // console.log(notitaOne.id);
-
-    idnotita.value = notitaOne.id;
-    //id.value = notita.id;
-    titulo.value = notitaOne.titu;
-    responsable.value = notitaOne.resp;
-    notita.value = notitaOne.noti;
-}
-
-// let BorraList = document.querySelectorAll(".btn-outline-danger");
-// BorraList.forEach(element => {
-//     element.addEventListener('click', (e) => {
-//         Swal.fire('El registro ha sido eliminado..!!','','success')
-//         delNotita(element.id.match(/(\d+)/)[0]);
-//         readAll();
-//     })
-// });
-
-
-
-
 
 //===> FUNCIONES PARA TRABAJAR CON EL LOCAL STORAGE <==========
-
 function read(key){
     return JSON.parse(window.localStorage.getItem(key)) || [];
 }
@@ -79,7 +43,7 @@ function save(key, data){
 //==================FIN FUNCIONES===========================
 
 
-//obtengo los elementos del formulario
+//===> Leo los datos desde el formulario <===
 let idnotita = document.querySelector("#id");
 let titulo = document.querySelector("#titulo");
 let responsable = document.querySelector("#responsable");
@@ -87,29 +51,25 @@ let notita = document.querySelector("#notita");
 
 
 
-//===> CREA Y ACTUALIZA UN REGISTRO (CREATE y el UPDATE)<===
+//===> CREA Y ACTUALIZA UN REGISTRO (CREATE y UPDATE)<===
 function createNotita(e){
 
     e.preventDefault();
-    // console.log(e);
 
-    //===> Leo el Objeto notitas <===
     let notitas = read("notitas");
-    // alert(titulo.value);
-
+    
+//Si el título es vacio no lo guarda
 if(titulo.value != null && titulo.value != ""){
 
     //===> Realiza el CREATE si el id es cero o no existe <===
     if (idnotita.value == 0 || idnotita.value == null ){
-        // alert(idnotita.value);
-        // alert(titulo.value);
-        const nota = {
+         const nota = {
             id: (notitas.length + 1), //Considera la longitud del objeto
             titu : titulo.value,
             resp : responsable.value,
             noti : notita.value,
         }
-        notitas.push(nota); // Graba el array
+        notitas.push(nota); 
         Swal.fire('Excelente, registro ingresado correctamente..!!','','success')
     } else {
          //===> Realiza el UPDATE <===
@@ -123,25 +83,29 @@ if(titulo.value != null && titulo.value != ""){
    
     }
 
-    //Swal.fire('Excelente, registro Ingresado o modificado correctamente..!!','','success')
-    save("notitas", notitas); //Graba en local storage
+    save("notitas", notitas); 
     clearForm();
     readAll();
 
  }else{
-     //alert("Debe ingresar datos, antes de guardar..!!");
-     //Swal.fire('El registro está vacio, no se guardará..!!','','success');
      Swal.fire({icon: 'error',title: 'El registro está vacío...!!',text: 'Ingrese datos e intente nuevamente..!!',footer: '<a href="">Consulte a soporte...?</a>'
       })
-     // Swal.fire('Any fool can use a computer');
  }
 
-    // location.reload();  //Esto lo hago ya que no se actualiza el readAll()
+ }
 
-    // Swal.fire('Excelente, registro Ingresado/modificado..!!','','success')
-    // setTimeout(() => document.querySelector(".alert").remove(), 3000);
+//===> Lee (READ) y presenta el registro seleccionado <===
+function leeUno(id){
+    let notitas = read("notitas");
+    let notitaOne = notitas[id - 1];
+ 
+    idnotita.value = notitaOne.id;
+    titulo.value = notitaOne.titu;
+    responsable.value = notitaOne.resp;
+    notita.value = notitaOne.noti;
 }
 
+//===> Borra (DELETE) el registro seleccionado <===
 function delNotita(id){
     let notitas = read("notitas");
     let filtrado = notitas.filter(notitaP => notitaP.id != id);
