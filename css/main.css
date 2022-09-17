@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+header {
+    padding: 10px 10px 10px 10px;
+    background-color: rgb(25, 135, 231);
+    color: #fff;
+    border-radius: 10px;
+}
+
+.banner{
+    padding: 10px 10px 10px 10px;
+    background-color: rgb(25, 135, 231);
+    color: #fff;
+    border-radius: 10px;
+}
+
+.form {
+    padding: 10px 10px 10px 10px;
+    background-color: aliceblue;
+    margin-bottom: 10px;
+    border-radius: 7px;
+}
