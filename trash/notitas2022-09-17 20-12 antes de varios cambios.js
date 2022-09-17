@@ -112,35 +112,27 @@ if(titulo.value != null && titulo.value != ""){
         notitas.push(nota); // Graba el array
         Swal.fire('Excelente, registro ingresado correctamente..!!','','success')
     } else {
-         //===> Realiza el UPDATE <===
+         //===> Realiza el Update <===
         let pos = notitas.findIndex(nota => nota.id == idnotita.value);
         if (pos >= 0){
             notitas[pos].titu = titulo.value;
             notitas[pos].resp = responsable.value;
             notitas[pos].noti = notita.value;
         }
-        Swal.fire('El registro: '+idnotita.value+', ha sido modificado correctamente..!!','','success')
-   
+        Swal.fire('El registro: '+id+', ha sido modificado correctamente..!!','','success')
     }
 
     //Swal.fire('Excelente, registro Ingresado o modificado correctamente..!!','','success')
-    save("notitas", notitas); //Graba en local storage
+    save("notitas", notitas); 
     clearForm();
     readAll();
 
  }else{
-     //alert("Debe ingresar datos, antes de guardar..!!");
-     //Swal.fire('El registro está vacio, no se guardará..!!','','success');
-     Swal.fire({icon: 'error',title: 'El registro está vacío...!!',text: 'Ingrese datos e intente nuevamente..!!',footer: '<a href="">Consulte a soporte...?</a>'
+    Swal.fire({icon: 'error',title: 'El registro está vacío...!!',text: 'Ingrese datos e intente nuevamente..!!',footer: '<a href="">Consulte a soporte...?</a>'
       })
-     // Swal.fire('Any fool can use a computer');
  }
 
-    // location.reload();  //Esto lo hago ya que no se actualiza el readAll()
-
-    // Swal.fire('Excelente, registro Ingresado/modificado..!!','','success')
-    // setTimeout(() => document.querySelector(".alert").remove(), 3000);
-}
+ }
 
 function delNotita(id){
     let notitas = read("notitas");
@@ -179,6 +171,7 @@ function readAll(){
         </tr>
         `;
     });
+
 
 }
 
