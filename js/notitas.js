@@ -22,17 +22,6 @@ botonAgregar.addEventListener("click", (e) => {createNotita(e)});
 let limpiar = document.getElementById('limpiar');
 limpiar.addEventListener('click', (e) => {clearForm()})
 
-//===> Si llega a ser necesario refresca todo, hasta el formulario <===
-let refresh = document.getElementById('refresh');
-refresh.addEventListener
-    refresh.addEventListener('click', _ => {
-        //alert("refresh");
-        clearForm();
-        readAll();
-        location.reload();  //Esto lo hago cuandoe no se actualiza el readAll()
-})
-
-
 //===> FUNCIONES PARA TRABAJAR CON EL LOCAL STORAGE <==========
 function read(key){
     return JSON.parse(window.localStorage.getItem(key)) || [];
